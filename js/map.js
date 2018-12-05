@@ -58,9 +58,21 @@ function drawMaps(geojson) {
                 .data(regionData)
                 .enter()
                 .append("div")
-                .attr("class","cases");
+                .attr("class","cases")
+               ;
 
             cases.each(function(d) {
+                d3.select(this).style("background-color", function(d) {
+                    if(d.level === "помірно гострий"){
+                        return "yellow"
+                    } else if (d.level === "гострий"){
+                        return "orange"
+                    } else if (d.level === "негострий"){
+                        return "lightgrey"
+                    }
+
+                });
+
                 d3.select(this)
                     .append("p")
                     .attr("class", "title")
@@ -142,12 +154,6 @@ function drawMaps(geojson) {
                         return d.links
                     });
             })
-
-
-
-
-
-
         });
 
     });
