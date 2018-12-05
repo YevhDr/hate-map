@@ -88,18 +88,6 @@ function drawMaps(geojson) {
                     .attr("class", "indicators")
                     .attr("id", "hate-speech")
                     .attr("src", "img/1.png")
-                    .style("opacity", function(d) {
-                        if(d.hatespeech === "TRUE"){
-                            return 1
-                        } else {
-                            return 0.1
-                        }
-                    });
-
-                indicators.append("img")
-                    .attr("class", "indicators")
-                    .attr("id", "hate-speech")
-                    .attr("src", "img/2.png")
                     .attr("title", "мова ворожнечі в статті")
                     .style("opacity", function(d) {
                         if(d.hatespeech === "TRUE"){
@@ -112,9 +100,9 @@ function drawMaps(geojson) {
                 indicators.append("img")
                     .attr("class", "indicators")
                     .attr("id", "hate-speech")
-                    .attr("src", "img/3.png")
+                    .attr("src", "img/2.png")
+                    .attr("title", "заклики до ворожнечі")
                     .style("opacity", function(d) {
-                        console.log(d);
                         if(d.hatespeech_call === "TRUE"){
                             return 1
                         } else {
@@ -125,9 +113,37 @@ function drawMaps(geojson) {
                 indicators.append("img")
                     .attr("class", "indicators")
                     .attr("id", "hate-speech")
-                    .attr("src", "img/court.png")
+                    .attr("src", "img/3.png")
+                    .attr("title", "мова ворочнечі в коментарях до статті")
                     .style("opacity", function(d) {
+                        console.log(d);
                         if(d.hatespeech_comments === "TRUE"){
+                            return 1
+                        } else {
+                            return 0.1
+                        }
+                    });
+
+                indicators.append("img")
+                    .attr("class", "indicators")
+                    .attr("id", "hate-speech")
+                    .attr("src", "img/court.png")
+                    .attr("title", function(d) { return d.court_string })
+                    .style("opacity", function(d) {
+                        if(d.court_logical=== "TRUE"){
+                            return 1
+                        } else {
+                            return 0.1
+                        }
+                    });
+
+                indicators.append("img")
+                    .attr("class", "indicators")
+                    .attr("id", "hate-speech")
+                    .attr("src", "img/appeal.png")
+                    .attr("title", function(d) { return d.appeal })
+                    .style("opacity", function(d) {
+                        if(d.appeal_logical=== "TRUE"){
                             return 1
                         } else {
                             return 0.1
