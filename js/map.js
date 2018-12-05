@@ -28,11 +28,11 @@ function drawMaps(geojson) {
         .append("path")
         .attr("class", "region")
         .attr("d", path)
-        .attr("fill", "grey")
+        .attr("fill", "lightgrey")
         .attr("fill-opacity", 0.5)
         .attr("stroke", "#222")
         .on("click", function(d) {
-        $(".region").attr("fill", "grey");
+        $(".region").attr("fill", "lightgrey");
             $(this).attr("fill", "red");
             var selected = d.properties.VARNAME_2;
 

@@ -1,6 +1,7 @@
 body {
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  background-color: #1d1d1d; }
 
 #content {
   display: grid;
@@ -12,12 +13,18 @@ h1 {
   margin: 10px auto auto 5%; }
 
 #mapid {
+  grid-column: 1/2;
+  width: 100%;
   height: 600px; }
 
 #cases {
   padding: 10px;
   max-height: 95vh;
   overflow-y: auto; }
+
+.cases {
+  padding: 10px;
+  margin: 10px 0; }
 
 .title {
   width: 70%;
