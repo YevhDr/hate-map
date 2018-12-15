@@ -50,6 +50,23 @@ function drawMaps(geojson) {
         });
     });
 
+
+    map.selectAll("text")
+        .data(geojson.features)
+        .enter()
+        .append("svg:text")
+        .text(function(d){
+            return d.properties.VARNAME_2;
+        })
+        .attr("x", function(d){
+            return path.centroid(d)[0];
+        })
+        .attr("y", function(d){
+            return  path.centroid(d)[1];
+        })
+        .attr("text-anchor","middle")
+        .attr('font-size','8pt');
+
 }
 
 
@@ -95,6 +112,7 @@ var drawCases = function(df, region) {
 
     cases.each(function (d) {
         d3.select(this).on("mouseover", function(d) {
+            $(".mark").remove();
             d.lon = +d.lon;
             d.lat = + d.lat;
 
@@ -114,9 +132,11 @@ var drawCases = function(df, region) {
                     return projection(marks)[1];
                 })
 
-        }).on("mouseout", function() {
-            $(".mark").remove();
-        });
+        })
+        //     .on("mouseout", function() {
+        //     $(".mark").remove();
+        // })
+        ;
 
 
 
