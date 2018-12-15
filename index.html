@@ -7,6 +7,20 @@
 </head>
 <body>
 <div id="content">
+
+    <div id="filter">
+        <div>
+            <h2>Фільтр</h2>
+        <select name='types' id='select'>
+            <option value=''>показати всі</option>
+            <option value='бізнесовий'>бізнесові конфлікти</option>
+            <option value='управлінський'>управлінські конфлікти</option>
+            <option value='девіантний (пов’язаний із вчиненням злочинів)'>девіантні конфлікти </option>
+            <option value='медичний'>медичні конфлікти</option>
+            <option value=міжнаціональний'>міжнаціональні конфлікти</option>
+        </select>
+        </div>
+    </div>
     <div id="mapid"></div>
 
     <div id="cases"></div>
@@ -14,6 +28,8 @@
 </div>
 <script src="lib/jquery-2.1.4.min.js"></script>
 <script src ="https://d3js.org/d3.v4.min.js"></script>
+<!--<script src="https://d3js.org/d3-dsv.v1.min.js"></script>-->
+<!--<script src="https://d3js.org/d3-fetch.v1.min.js"></script>-->
 <script src="js/map.js"></script>
 
 </body>

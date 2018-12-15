@@ -29,29 +29,34 @@ function drawMaps(geojson) {
         .attr("class", "region")
         .attr("d", path)
         .attr("fill", "lightgrey")
-        .attr("fill-opacity", 0.5)
+        .attr("fill-opacity", 0.9)
         .attr("stroke", "#222")
         .on("click", function(d) {
         $(".region").attr("fill", "lightgrey");
             $(this).attr("fill", "red");
-            var selected = d.properties.VARNAME_2;
+            var selectedRegion = d.properties.VARNAME_2;
+            var selectedType = $( "#select option:selected").val();
 
             var container = d3.select("#cases");
+
+
 
         d3.csv("data/data.csv", function(mydata){
 
             var regionData = mydata.filter(function(d){
-                return d.district === selected
+                if(selectedType === "") {
+                    return d.district === selectedRegion;
+                } else {
+                    return d.district === selectedRegion && d.type === selectedType;
+                }
             });
-
-            console.log(regionData);
 
             $("#cases").html("");
 
 
             d3.select("#cases")
                 .append("h1")
-                .html(selected + " район");
+                .html(selectedRegion + " район");
 
            var cases = d3.select("#cases")
                 .selectAll("div")
@@ -171,6 +176,7 @@ function drawMaps(geojson) {
                     });
             })
         });
+
 
     });
 
