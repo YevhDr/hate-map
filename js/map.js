@@ -124,7 +124,9 @@ var drawCases = function(df, region) {
                 .attr("width", 30)
                 .attr("height", 30)
                 .attr("class", "mark")
-                .attr("xlink:href",'img/pin.png')
+                // .attr("xlink:href",'img/pin.png')
+                .attr("xlink:href",'https://cdn3.iconfinder.com/data/icons/softwaredemo/PNG/24x24/DrawingPin1_Blue.png')
+
                 .attr("x", function () {
                     console.log(projection(marks));
                     return projection(marks)[0]; })

@@ -4,6 +4,17 @@ body {
   background-color: #1d1d1d;
   overflow-y: hidden; }
 
+#report {
+  position: absolute;
+  left: 50px;
+  bottom: 0;
+  font-weight: bold;
+  color: white;
+  cursor: pointer; }
+
+#report:hover {
+  color: yellow; }
+
 #content {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -16,10 +27,11 @@ h1 {
   margin: 10px auto auto 5%; }
 
 #filter {
+  z-index: 1000;
   grid-row: 1/2;
   grid-column: 1/2;
   display: flex;
-  height: 10vh; }
+  height: 5vh; }
   #filter div {
     margin: auto 50px; }
   #filter h2 {
