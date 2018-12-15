@@ -19,6 +19,8 @@ var map = d3.select("#mapid")
     .attr("width", width)
     .attr("height", height);
 
+var markers = map.append("g");
+
 
 d3.json("data/map.geojson", drawMaps);
 
@@ -88,9 +90,34 @@ var drawCases = function(df, region) {
             .enter()
             .append("div")
             .attr("class", "cases")
+
         ;
 
     cases.each(function (d) {
+        d3.select(this).on("mouseover", function(d) {
+            d.lon = +d.lon;
+            d.lat = + d.lat;
+
+            var marks  = [d.lon, d.lat];
+
+            map.selectAll(".mark")
+                .data(marks).enter()
+                .append("image")
+                .attr("class", "mark")
+                .attr("xlink:href",'https://cdn3.iconfinder.com/data/icons/softwaredemo/PNG/24x24/DrawingPin1_Blue.png')
+                .attr("x", function () {
+                    console.log(projection(marks));
+                    return projection(marks)[0]; })
+                .attr("y", function () {
+                    return projection(marks)[1];
+                })
+
+        }).on("mouseout", function() {
+            $(".mark").remove();
+        });
+
+
+
         d3.select(this).style("background-color", function (d) {
             if (d.level === "помірно гострий") {
                 return "yellow"
