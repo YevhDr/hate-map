@@ -20,7 +20,7 @@ body {
 #content {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  grid-template-rows: auto auto; }
+  grid-template-rows: 300px 100px auto; }
 
 h1 {
   color: white;
@@ -44,6 +44,24 @@ p {
     font-size: 16px; }
   #filter #select {
     width: 100%; }
+
+#legend {
+  display: none;
+  color: white;
+  margin: auto 50px;
+  z-index: 1000;
+  grid-row: 2/3;
+  grid-column: 1/2;
+  height: auto;
+  pointer-events: none; }
+  #legend h2 {
+    color: white;
+    font-size: 16px; }
+  #legend p span {
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+    display: inline-block; }
 
 #mapid {
   grid-row: 2/3;

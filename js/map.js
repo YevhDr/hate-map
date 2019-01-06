@@ -58,8 +58,10 @@ function drawMaps(geojson) {
         .attr("fill-opacity", 0.9)
         .attr("stroke", "#1d1d1d")
         .on("click", function(d) {
-        $(".region").attr("fill", "lightgrey");
-            $(this).attr("fill", "red");
+            $("#legend").css("display", "block");
+            $("text").css("font-weight", "100");
+            // $(this).attr("fill", "lightgrey");
+           $( "text:contains('"+ d.properties.VARNAME_2 +"')" ).css( "font-weight", "800" );
             selectedRegion = d.properties.VARNAME_2;
             var container = d3.select("#cases");
 
@@ -137,27 +139,30 @@ var drawCases = function(df, region) {
 
             var marks  = [d.lon, d.lat];
 
+            if(d.level === "помірно гострий"){
+
             map.selectAll(".mark")
                 .data(marks).enter()
                 .append("image")
                 .attr("width", 30)
                 .attr("height", 30)
                 .attr("class", "mark")
-                .attr("xlink:href",'img/pin.png')
-                // .attr("xlink:href",'https://cdn3.iconfinder.com/data/icons/softwaredemo/PNG/24x24/DrawingPin1_Blue.png')
-
+                .attr("xlink:href",'img/pin.svg')
                 .attr("x", function () {
                     console.log(projection(marks));
                     return projection(marks)[0]; })
                 .attr("y", function () {
                     return projection(marks)[1];
                 })
+                .attr("fill", "blue")
+            }
 
         })
             .on("mouseout", function() {
             $(".mark").remove();
         })
         ;
+
 
 
 
