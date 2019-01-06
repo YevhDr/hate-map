@@ -67,6 +67,12 @@ function drawMaps(geojson) {
 
         d3.csv("data/data.csv", function(mydata){
 
+
+
+            // mydata.sort(function(a, b){
+            //     return b.level - a.level
+            // });
+
             drawCases(mydata, selectedRegion);
 
         });
@@ -115,6 +121,16 @@ var drawCases = function(df, region) {
         }
     });
 
+    console.log(regionData);
+    regionData = regionData.sort(function(a, b) {
+        if(a.level < b.level) { return -1; }
+        if(a.level > b.level) { return 1; }
+        return 0;
+    });
+
+    console.log(regionData);
+
+
     $("#cases-container").html("");
     $("#details").css("display", "none");
 
@@ -139,7 +155,7 @@ var drawCases = function(df, region) {
 
             var marks  = [d.lon, d.lat];
 
-            if(d.level === "помірно гострий"){
+
 
             map.selectAll(".mark")
                 .data(marks).enter()
@@ -147,15 +163,22 @@ var drawCases = function(df, region) {
                 .attr("width", 30)
                 .attr("height", 30)
                 .attr("class", "mark")
-                .attr("xlink:href",'img/pin.svg')
+                // .attr("xlink:href", function(){
+                //     if(d.level === "помірно гострий") {
+                //         return 'img/pin_yellow.svg'
+                //     } else if(d.level === "гострий") {
+                //         return 'img/pin_orange.svg'
+                //     } else {
+                //         return 'img/pin_grey.svg'
+                //     }
+                // })
+                .attr("xlink:href", 'img/pin.png')
                 .attr("x", function () {
                     console.log(projection(marks));
                     return projection(marks)[0]; })
                 .attr("y", function () {
                     return projection(marks)[1];
                 })
-                .attr("fill", "blue")
-            }
 
         })
             .on("mouseout", function() {
