@@ -2,7 +2,9 @@ body {
   margin: 0;
   padding: 0;
   background-color: #1d1d1d;
-  overflow-y: hidden; }
+  overflow-y: hidden;
+  line-height: 1.6;
+  font-family: 'Play', sans-serif; }
 
 #report {
   position: absolute;
@@ -22,9 +24,12 @@ body {
 
 h1 {
   color: white;
-  font-size: 20px;
+  font-size: 25px;
   width: 70%;
-  margin: 10px auto auto 5%; }
+  margin: 10px auto 40px 5%; }
+
+p {
+  font-size: 15px; }
 
 #filter {
   z-index: 1000;
@@ -45,6 +50,14 @@ h1 {
   grid-column: 1/2;
   width: 100%;
   height: 600px; }
+  #mapid svg {
+    position: absolute;
+    top: 0;
+    left: 0; }
+    #mapid svg .region {
+      cursor: pointer; }
+    #mapid svg text {
+      pointer-events: none; }
 
 #cases {
   grid-row: 1/-1;
@@ -52,6 +65,9 @@ h1 {
   padding: 10px;
   max-height: 95vh;
   overflow-y: auto; }
+  #cases p.intro {
+    color: white;
+    margin: 10px auto auto 5%; }
 
 .cases {
   padding: 10px;
