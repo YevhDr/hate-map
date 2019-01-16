@@ -23,17 +23,22 @@ var map = d3.select("#mapid")
     .attr("height", height)
     .attr("id", "bessarabia");
 
+
+
+
 var map2 = d3.select("#mapid")
     .insert("svg", "#bessarabia")
     .attr("width", width)
     .attr("height", height)
-    .attr("id", "ukraine");
+    .attr("id", "ukraine")
+    .append("g");
 
 var markers = map.append("g");
 
 d3.json("data/ukr_shape.geojson", drawUkraine);
 
-function drawUkraine(ukraine) {
+function drawUkraine(ukraine) {   
+    
     map2.selectAll("path")
         .data(ukraine.features)
         .enter()
@@ -44,10 +49,38 @@ function drawUkraine(ukraine) {
 
 }
 
+d3.select("#mapid svg").append('path')
+    .attr("d", "M143,155C106,144,98,110,102,85")
+    .attr("fill", "none")
+    .attr("class", "annotation")
+    .attr("stroke", "red");
+
+d3.select("#mapid svg").append('path')
+    .attr("d", "M212,433C181,419,162,387,170,349")
+    .attr("class", "annotation")
+    .attr("fill", "none")
+    .attr("stroke", "red");
+
+d3.select("#mapid svg").append('text')
+    .attr("y", 320)
+    .attr("fill", "red")
+    .attr("font-size", "13px")
+    .attr("class", "annotation")
+    .tspans(d3.wordwrap("Оберіть один з пʼяти районів", 20), 20, 130);
+
+d3.select("#mapid svg").append('text')
+    .attr("y", 170)
+    .attr("fill", "red")
+    .attr("class", "annotation")
+    .attr("font-size", "13px")
+    .tspans(d3.wordwrap("Використовуйте фільтр конфліктів", 20), 20, 110);
+
 
 d3.json("data/map.geojson", drawMaps);
 
 function drawMaps(geojson) {
+
+    
     map.selectAll("path")
         .data(geojson.features)
         .enter()
@@ -57,78 +90,105 @@ function drawMaps(geojson) {
         .attr("fill", "lightgrey")
         .attr("fill-opacity", 0.9)
         .attr("stroke", "#1d1d1d")
-        .on("click", function(d) {
+        .on("click", function (d) {
             $("#legend").css("display", "block");
             $("text").css("font-weight", "100");
             // $(this).attr("fill", "lightgrey");
-           $( "text:contains('"+ d.properties.VARNAME_2 +"')" ).css( "font-weight", "800" );
+            $("text:contains('" + d.properties.VARNAME_2 + "')").css("font-weight", "800");
             selectedRegion = d.properties.VARNAME_2;
             var container = d3.select("#cases");
 
-        d3.csv("data/data.csv", function(mydata){
+            d3.csv("data/data_new.csv", function (mydata) {
+
+                var dataForBarchart = mydata.filter(function (d) {
+                    return d.district === selectedRegion
+                });
 
 
+                var nest = d3.nest()
+                    .key(function (d) {
+                        return d.type;
+                    })
+                    .sortKeys(d3.ascending)
+                    .rollup(function (obj) {
+                        return obj.length;
+                    })
+                    .entries(dataForBarchart);
 
-            // mydata.sort(function(a, b){
-            //     return b.level - a.level
-            // });
 
-            drawCases(mydata, selectedRegion);
+                drawBarChart(nest, "#bar-chart");
 
+                // mydata.sort(function(a, b){
+                //     return b.level - a.level
+                // });
+
+                drawCases(mydata, selectedRegion);
+
+            });
         });
-    });
 
 
     map.selectAll("text")
         .data(geojson.features)
         .enter()
         .append("svg:text")
-        .text(function(d){
+        .text(function (d) {
             return d.properties.VARNAME_2;
         })
-        .attr("x", function(d){
+        .attr("x", function (d) {
             return path.centroid(d)[0];
         })
-        .attr("y", function(d){
-            return  path.centroid(d)[1];
+        .attr("y", function (d) {
+            if(d.properties.VARNAME_2 === "Татарбунарський"){
+                return path.centroid(d)[1] - 10;
+            } else {
+                return path.centroid(d)[1];
+
+            }
         })
-        .attr("text-anchor","middle")
-        .attr('font-size','8pt');
+        .attr("text-anchor", "middle")
+        .attr('font-size', '8pt');
 
 }
 
 
-$('select').on('change', function() {
-    d3.csv("data/data.csv", function(mydata){
+$('select').on('change', function () {
+    console.log(selectedRegion);
+    d3.csv("data/data_new.csv", function (mydata) {
+        console.log(selectedRegion === undefined);
+        if (selectedRegion === undefined){
+            alert("Оберіть район на карті")
+        } else {
+            drawCases(mydata, selectedRegion);
 
-        drawCases(mydata, selectedRegion);
+        }
+
+
+
 
     });
 });
 
 
-
-
-
-
-var drawCases = function(df, region) {
-    var selectedType = $( "#select option:selected").val();
-    var regionData = df.filter(function(d){
-        if(selectedType === "") {
+var drawCases = function (df, region) {
+    var selectedType = $("#select option:selected").val();
+    var regionData = df.filter(function (d) {
+        if (selectedType === "") {
             return d.district === selectedRegion;
         } else {
             return d.district === selectedRegion && d.type === selectedType;
         }
     });
 
-    console.log(regionData);
-    regionData = regionData.sort(function(a, b) {
-        if(a.level < b.level) { return -1; }
-        if(a.level > b.level) { return 1; }
+    regionData = regionData.sort(function (a, b) {
+        if (a.level < b.level) {
+            return -1;
+        }
+        if (a.level > b.level) {
+            return 1;
+        }
         return 0;
     });
-
-    console.log(regionData);
 
 
     $("#cases-container").html("");
@@ -148,13 +208,12 @@ var drawCases = function(df, region) {
         ;
 
     cases.each(function (d) {
-        d3.select(this).on("mouseover", function(d) {
+        d3.select(this).on("mouseover", function (d) {
             $(".mark").remove();
             d.lon = +d.lon;
-            d.lat = + d.lat;
+            d.lat = +d.lat;
 
-            var marks  = [d.lon, d.lat];
-
+            var marks = [d.lon, d.lat];
 
 
             map.selectAll(".mark")
@@ -172,21 +231,20 @@ var drawCases = function(df, region) {
                 //         return 'img/pin_grey.svg'
                 //     }
                 // })
-                .attr("xlink:href", 'img/pin.png')
+                .attr("xlink:href", 'img/pin_red.svg')
                 .attr("x", function () {
                     console.log(projection(marks));
-                    return projection(marks)[0]; })
+                    return projection(marks)[0];
+                })
                 .attr("y", function () {
                     return projection(marks)[1];
                 })
 
         })
-            .on("mouseout", function() {
-            $(".mark").remove();
-        })
+            .on("mouseout", function () {
+                $(".mark").remove();
+            })
         ;
-
-
 
 
         d3.select(this).style("background-color", function (d) {
@@ -195,7 +253,7 @@ var drawCases = function(df, region) {
             } else if (d.level === "гострий") {
                 return "orange"
             } else if (d.level === "негострий") {
-                return "lightgrey"
+                return "lightyellow"
             }
 
         });
@@ -243,7 +301,7 @@ var drawCases = function(df, region) {
             .attr("src", "img/3.png")
             .attr("title", "мова ворочнечі в коментарях до статті")
             .style("opacity", function (d) {
-                console.log(d);
+
                 if (d.hatespeech_comments === "TRUE") {
                     return 1
                 } else {
@@ -299,4 +357,78 @@ var drawCases = function(df, region) {
                 return d.links
             });
     })
+
 };
+
+
+function drawBarChart(df, container) {
+
+    $(container).empty();
+    $(".annotation").remove();
+
+
+    var margin = {top: 20, right: 20, bottom: 30, left: 150},
+        width = 300 - margin.left - margin.right,
+        height = 250 - margin.top - margin.bottom;
+
+
+    var y = d3.scaleBand()
+        .range([height, 0]);
+
+    var x = d3.scaleLinear()
+        .range([0, width]);
+
+
+    var svg = d3.select(container).append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
+
+
+    df.forEach(function (d) {
+        d.value = +d.value;
+    });
+
+    x.domain([0, 14]);
+
+    // y.domain(df.map(function (d) {
+    //     return d.key;
+    // }));
+
+    y.domain(["бізнесовий", "управлінський",
+        "політичний", "екологічний", "ОТГ", "земельний",
+        "міжнаціональний", "АТО", "реформа медицини", "девіантний"]);
+
+
+    svg.selectAll(".bar")
+        .data(df)
+        .enter().append("rect")
+        .attr("class", "bar")
+        //.attr("x", function(d) { return x(d.sales); })
+        .attr("width", function (d) {
+            return x(d.value);
+        })
+        .attr("y", function (d) {
+            return y(d.key);
+        })
+        .attr("height", 10)
+        .attr("fill", "red");
+
+// add the x Axis
+//     svg.append("g")
+//         .attr("transform", "translate(0," + height + ")")
+//         .call(d3.axisBottom(x));
+
+// add the y Axis
+    svg.append("g")
+        .call(d3.axisLeft(y));
+
+    svg.selectAll("g.tick text")
+        .attr("dy", 0);
+
+};
+
+
+

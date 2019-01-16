@@ -11,15 +11,21 @@
 <body>
 
 <div id="header">
-
+    <div id="title">
+        <h1>
+            Інтерактивна мапа конфліктів півдня Одеської області
+        </h1>
+        <h3>Інтерактивна мапа розроблена в рамках проекту "Розробка пілотної моделі мапування соціальних конфліктів на прикладі п’яти районів півдня Одеської області"  спільно з Програмним офісом Форуму громадянської служби миру (forum ZFD) в Україні та за підтримки forum ZFD.</h3>
+    </div>
 
 </div>
 
 
 <div id="content">
 
-    <div id="report">
-        <p>Повідомити про конфлікт</p>
+    <div id="bar">
+       <!--<p>Кількість конфліктів у районі по типам:</p>-->
+        <div id="bar-chart"></div>
     </div>
 
     <div id="filter">
@@ -29,39 +35,53 @@
             <option value=''>показати всі</option>
             <option value='бізнесовий'>бізнесові конфлікти</option>
             <option value='управлінський'>управлінські конфлікти</option>
-            <option value='девіантний (пов’язаний із вчиненням злочинів)'>девіантні конфлікти </option>
-            <option value='медичний'>медичні конфлікти</option>
-            <option value=міжнаціональний'>міжнаціональні конфлікти</option>
+            <option value='девіантний'>девіантні (пов’язані із вчиненням злочинів)</option>
+            <option value='реформа медицини'>повʼязані з медреформою</option>
+            <option value='міжнаціональний'>міжнаціональні конфлікти</option>
+            <option value='ОТГ'>ОТГ (повʼязані з адміністративною реформою)</option>
+            <option value='АТО'>АТО (повʼязані з АТО)</option>
+            <option value='освіта'>конфлікт в сфері освіти</option>
+            <option value='політичний'>політичні конфлікти</option>
+
         </select>
         </div>
     </div>
 
-    <div id="legend">
-        <h2>Ступінь серйозності</h2>
-        <p><span style="background-color: #ff8b4c;"></span>гострий</p>
-        <p><span style="background-color: yellow;"></span>помірно гострий</p>
-        <p><span style="background-color: grey;"></span>негострий</p>
-    </div>
+
 
 
     <div id="mapid"></div>
 
     <div id="cases">
-        <h1>Карта конфліктності. <span id="paste-region" style="color:white">Південь Одещини</span></h1>
+        <div id="legend">
+            <h1><span id="paste-region" style="color:white">Південь Одещини</span></h1>
+            <p><span style="background-color: #ff8b4c;"></span>гострий</p>
+            <p><span style="background-color: yellow;"></span>помірно гострий</p>
+            <p><span style="background-color: lightyellow;"></span>негострий</p>
+        </div>
         <div id="details">
             <img src="img/small_map.png" style="width:80%; margin:0 auto;"/>
             <p class="intro">Протягом трьох місяців ми проводили пілотний моніторінг конфліктів в регіоні і нанесли їх на карту.</p>
-            <p class="intro">Моніторинг охопив <span style="color:red;"><b>Ізмаїльський, Ренійський, Кілійський, Болградський і Татарбунарський</b></span> райони Одеської області. <span style="color:red;"><b>Клікніть на район</b></span>, щоб подивитись детальну інформацію по зафіксованим конфліктам.</p>
+            <p class="intro">Моніторинг охопив <span style="color:red;"><b>Ізмаїльський, Ренійський, Кілійський, Болградський і Татарбунарський</b></span> райони Одеської області. </p>  <p class="intro"><span style="color:red;"><b>Клікніть на район на карті</b></span>, щоб подивитись детальну інформацію по зафіксованим конфліктам.</p>
             <p class="intro">Карта буде наповнюватись. Щоб повідомити про конфлікт, тисніть на відповідний лінк внизу карти і заповніть онлайн-форму.</p>
             </div>
+
             <div id="cases-container">
 
             </div>
     </div>
 
+    <div id="report">
+        <p>Повідомити про конфлікт</p>
+    </div>
+
 </div>
+
 <script src="lib/jquery-2.1.4.min.js"></script>
 <script src ="https://d3js.org/d3.v4.min.js"></script>
+<!--<script src ="lib/swoopy-drag.js"></script>-->
+<script src ="lib/d3v4jetpack.js"></script>
+
 <!--<script src="https://d3js.org/d3-dsv.v1.min.js"></script>-->
 <!--<script src="https://d3js.org/d3-fetch.v1.min.js"></script>-->
 <script src="js/map.js"></script>
