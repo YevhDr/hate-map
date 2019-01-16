@@ -9,7 +9,6 @@ body {
   margin: 0;
   padding: 0;
   background-color: #1d1d1d;
-  height: 200vh;
   line-height: 1.6;
   font-family: 'Play', sans-serif; }
 
@@ -32,8 +31,8 @@ body {
 #report {
   position: absolute;
   left: 50px;
-  bottom: -50px;
-  z-index: 500000;
+  bottom: -96vh;
+  z-index: 5000;
   font-weight: bold;
   color: white;
   cursor: pointer;
