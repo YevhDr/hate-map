@@ -1,6 +1,8 @@
 var rect = $("#mapid")[0].getBoundingClientRect();
 var width = rect.width,
     height = rect.height;
+// var width = 800,
+//     height = 600;
 
 
 var selectedRegion;
@@ -21,6 +23,10 @@ var map = d3.select("#mapid")
     .append("svg")
     .attr("width", width)
     .attr("height", height)
+    // .attr("width", "100%")
+    // .attr("height", "100%")
+    // .attr("viewBox", "0 0 800 600")
+    // .attr("preserveAspectRatio", "xMidYmin meet")
     .attr("id", "bessarabia");
 
 
@@ -30,6 +36,10 @@ var map2 = d3.select("#mapid")
     .insert("svg", "#bessarabia")
     .attr("width", width)
     .attr("height", height)
+    // .attr("width", "100%")
+    // .attr("height", "100%")
+    // .attr("viewBox", "0 0 800 600")
+    // .attr("preserveAspectRatio", "xMidYmin meet")
     .attr("id", "ukraine")
     .append("g");
 
@@ -66,14 +76,14 @@ d3.select("#mapid svg").append('text')
     .attr("fill", "red")
     .attr("font-size", "13px")
     .attr("class", "annotation")
-    .tspans(d3.wordwrap("Оберіть один з пʼяти районів", 20), 20, 130);
+    .tspans(d3.wordwrap("Оберіть один з пʼяти районів", 20), 20, 110);
 
 d3.select("#mapid svg").append('text')
     .attr("y", 170)
     .attr("fill", "red")
     .attr("class", "annotation")
     .attr("font-size", "13px")
-    .tspans(d3.wordwrap("Використовуйте фільтр конфліктів", 20), 20, 110);
+    .tspans(d3.wordwrap("Використовуйте фільтр конфліктів", 20), 20, 130);
 
 
 d3.json("data/map.geojson", drawMaps);
