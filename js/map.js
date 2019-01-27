@@ -170,7 +170,7 @@ function drawMaps(geojson) {
 
 $('select').on('change', function () {
     console.log(selectedRegion);
-    d3.csv("data/data_new.csv", function (mydata) {
+    d3.csv("data/data_correct.csv", function (mydata) {
         console.log(selectedRegion === undefined);
         if (selectedRegion === undefined){
             alert("Оберіть район на карті")
