@@ -8,9 +8,33 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #1d1d1d;
+  background-color: #333333;
   line-height: 1.6;
   font-family: 'Play', sans-serif; }
+  @media (max-width: 800px) and (orientation: portrait) {
+    body {
+      height: 100vh;
+      overflow-y: hidden;
+      overflow-x: hidden; } }
+
+#myModal {
+  width: 100%;
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+  height: 150vh;
+  background-color: #333333;
+  z-index: 2000; }
+  @media (max-width: 800px) and (orientation: portrait) {
+    #myModal {
+      display: flex; } }
+  #myModal #warning {
+    text-align: center;
+    width: 60%;
+    margin: 25vh auto;
+    color: white;
+    font-weight: 800; }
 
 #header {
   height: 100vh;
@@ -42,9 +66,10 @@ body {
       text-align: center; }
 
 #report {
+  text-decoration: none;
   position: absolute;
   left: 50px;
-  bottom: -96vh;
+  bottom: 0;
   z-index: 5000;
   font-weight: bold;
   color: white;
@@ -63,6 +88,9 @@ body {
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-template-rows: 300px 100px auto; }
+  @media (max-width: 800px) and (orientation: landscape) {
+    #content {
+      display: block; } }
 
 h1 {
   color: white;
@@ -133,9 +161,16 @@ p {
   padding: 10px;
   max-height: 95vh;
   overflow-y: auto; }
+  @media (max-width: 800px) {
+    #cases {
+      max-height: 200vh; } }
   #cases p.intro {
     color: white;
     margin: 10px auto auto 5%; }
+
+@media (max-width: 800px) {
+  #jpeg-map {
+    display: none; } }
 
 .cases {
   padding: 10px;
