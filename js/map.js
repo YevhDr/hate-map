@@ -16,7 +16,7 @@ var selectedRegion;
 var projection = d3.geoMercator()
     .scale(15000)
     // .rotate([-0.25, 0.25, 0])
-    .center([29.5, 46.0]);
+    .center([29.5, 46.15]);
 
 
 var path = d3.geoPath()
@@ -214,7 +214,7 @@ var drawCases = function (df, region) {
     d3.select("#paste-region")
         .html(selectedRegion + " район");
 
-    // if(regionData.length > 0) {
+    if(regionData.length > 0) {
 
         var cases = d3.select("#cases-container")
                 .selectAll("div")
@@ -376,12 +376,12 @@ var drawCases = function (df, region) {
                 });
         })
 
-    // } else {
-    //     d3.select("#cases-container")
-    //         .append("h5")
-    //         .text("За обраним типом конліктів в районі не зафіксовано")
-    //         .style("color", "white")
-    // }
+    } else {
+        d3.select("#cases-container")
+            .append("h5")
+            .text("За обраним типом конліктів в районі не зафіксовано")
+            .style("color", "white")
+    }
 
 };
 
