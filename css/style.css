@@ -217,4 +217,21 @@ p {
   #bar #bar-chart svg g.tick line {
     opacity: 0; }
 
+#source {
+  display: block;
+  margin: 20px 5%; }
+  #source a {
+    text-decoration: none; }
+  #source button {
+    border: none;
+    outline: none;
+    padding: 5px;
+    margin: 10px 0;
+    display: block;
+    cursor: pointer; }
+  #source button:hover {
+    border: none;
+    outline: none;
+    background-color: #e84045; }
+
 /*# sourceMappingURL=style.css.map */
