@@ -14,9 +14,8 @@ var width = rect.width,
 var selectedRegion;
 
 var projection = d3.geoMercator()
-    .scale(15000)
-    // .rotate([-0.25, 0.25, 0])
-    .center([29.5, 46.15]);
+    .scale(2800)
+    .center([28.5, 51.15]);
 
 
 var path = d3.geoPath()
@@ -25,74 +24,67 @@ var path = d3.geoPath()
 var path2 = d3.geoPath()
     .projection(projection);
 
-var map = d3.select("#mapid")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    // .attr("width", "100%")
-    // .attr("height", "100%")
-    // .attr("viewBox", "0 0 800 600")
-    // .attr("preserveAspectRatio", "xMidYmin meet")
-    .attr("id", "bessarabia");
+var map = d3.select("#adm2");
+    // .append("svg")
+    // .attr("width", width)
+    // .attr("height", height)
+    // .attr("id", "adm2");
 
 
-
-
-var map2 = d3.select("#mapid")
-    .insert("svg", "#bessarabia")
-    .attr("width", width)
-    .attr("height", height)
-    // .attr("width", "100%")
-    // .attr("height", "100%")
-    // .attr("viewBox", "0 0 800 600")
-    // .attr("preserveAspectRatio", "xMidYmin meet")
-    .attr("id", "ukraine")
+var map2 = d3.select("#adm1")
+    // .insert("svg", "#bessarabia")
+    // .attr("width", width)
+    // .attr("height", height)
+    // .attr("id", "adm1")
     .append("g");
 
 var markers = map.append("g");
 
-d3.json("data/ukr_shape.geojson", drawUkraine);
+d3.json("data/ukr_adm1.geojson", drawUkraine);
 
-function drawUkraine(ukraine) {   
-    
+function drawUkraine(ukraine) {
+
     map2.selectAll("path")
         .data(ukraine.features)
         .enter()
         .append("path")
         .attr("d", path)
-        .attr("fill", "#F3F3F3")
+        .attr("fill", "transparent")
+        .attr("stroke", "black")
         .attr("opacity", 0.05)
 
 }
 
-d3.select("#mapid svg").append('path')
-    .attr("d", "M143,155C106,144,98,110,102,85")
-    .attr("fill", "none")
-    .attr("class", "annotation")
-    .attr("stroke", "red");
+// d3.select("#mapid svg").append('path')
+//     .attr("d", "M143,155C106,144,98,110,102,85")
+//     .attr("fill", "none")
+//     .attr("class", "annotation")
+//     .attr("stroke", "red");
+//
+// d3.select("#mapid svg").append('path')
+//     .attr("d", "M212,433C181,419,162,387,170,349")
+//     .attr("class", "annotation")
+//     .attr("fill", "none")
+//     .attr("stroke", "red");
+//
+// d3.select("#mapid svg").append('text')
+//     .attr("y", 320)
+//     .attr("x", 0)
+//     .attr("fill", "red")
+//     .attr("font-size", "13px")
+//     .attr("class", "annotation")
+//     .tspans(d3.wordwrap("Оберіть один з наявних районів", 20), 20, 80);
+//
+// d3.select("#mapid svg").append('text')
+//     .attr("y", 170)
+//     .attr("x", 0)
+//     .attr("fill", "red")
+//     .attr("class", "annotation")
+//     .attr("font-size", "13px")
+//     .tspans(d3.wordwrap("Використовуйте фільтр конфліктів", 20), 20, 100);
 
-d3.select("#mapid svg").append('path')
-    .attr("d", "M212,433C181,419,162,387,170,349")
-    .attr("class", "annotation")
-    .attr("fill", "none")
-    .attr("stroke", "red");
 
-d3.select("#mapid svg").append('text')
-    .attr("y", 320)
-    .attr("fill", "red")
-    .attr("font-size", "13px")
-    .attr("class", "annotation")
-    .tspans(d3.wordwrap("Оберіть один з пʼяти районів", 20), 20, 110);
-
-d3.select("#mapid svg").append('text')
-    .attr("y", 170)
-    .attr("fill", "red")
-    .attr("class", "annotation")
-    .attr("font-size", "13px")
-    .tspans(d3.wordwrap("Використовуйте фільтр конфліктів", 20), 20, 130);
-
-
-d3.json("data/map.geojson", drawMaps);
+d3.json("data/ukr_adm2.geojson", drawMaps);
 
 function drawMaps(geojson) {
 
@@ -103,15 +95,28 @@ function drawMaps(geojson) {
         .append("path")
         .attr("class", "region")
         .attr("d", path)
-        .attr("fill", "lightgrey")
-        .attr("fill-opacity", 0.9)
-        .attr("stroke", "#1d1d1d")
+        .attr("fill", function(d) {
+            if(d.properties.NAME_2 === "Ізмаїльський" ||
+                d.properties.NAME_2 === "Болградський" ||
+                d.properties.NAME_2 === "Кілійський" ||
+                d.properties.NAME_2 === "Ренійський" ||
+                d.properties.NAME_2 === "Татарбунарський"){
+                return "orange"
+            } else {
+                return "lightgrey"
+            }
+        })
+        .attr("fill-opacity", 1)
+        .attr("stroke", "#CDCDCD")
         .on("click", function (d) {
+
             $("#legend").css("display", "block");
             $("text").css("font-weight", "100");
             // $(this).attr("fill", "lightgrey");
-            $("text:contains('" + d.properties.VARNAME_2 + "')").css("font-weight", "800");
-            selectedRegion = d.properties.VARNAME_2;
+            // $("text:contains('" + d.properties.VARNAME_2 + "')").css("font-weight", "800");
+            // selectedRegion = d.properties.VARNAME_2;
+            $("text:contains('" + d.properties.NAME_2 + "')").css("font-weight", "800");
+            selectedRegion = d.properties.NAME_2;
             var container = d3.select("#cases");
 
             d3.csv("data/data_correct.csv", function (mydata) {
@@ -144,26 +149,28 @@ function drawMaps(geojson) {
         });
 
 
-    map.selectAll("text")
-        .data(geojson.features)
-        .enter()
-        .append("svg:text")
-        .text(function (d) {
-            return d.properties.VARNAME_2;
-        })
-        .attr("x", function (d) {
-            return path.centroid(d)[0];
-        })
-        .attr("y", function (d) {
-            if(d.properties.VARNAME_2 === "Татарбунарський"){
-                return path.centroid(d)[1] - 10;
-            } else {
-                return path.centroid(d)[1];
-
-            }
-        })
-        .attr("text-anchor", "middle")
-        .attr('font-size', '8pt');
+    // map.selectAll("text")
+    //     .data(geojson.features)
+    //     .enter()
+    //     .append("svg:text")
+    //     .text(function (d) {
+    //         // return d.properties.VARNAME_2;
+    //         return d.properties.ADM2_UA;
+    //     })
+    //     .attr("x", function (d) {
+    //         return path.centroid(d)[0];
+    //     })
+    //     .attr("y", function (d) {
+    //         // if(d.properties.VARNAME_2 === "Татарбунарський"){
+    //         if(d.properties.ADM2_UA === "Татарбунарський"){
+    //             return path.centroid(d)[1] - 10;
+    //         } else {
+    //             return path.centroid(d)[1];
+    //
+    //         }
+    //     })
+    //     .attr("text-anchor", "middle")
+    //     .attr('font-size', '8pt');
 
 }
 
@@ -236,9 +243,10 @@ var drawCases = function (df, region) {
 
                 map.selectAll(".mark")
                     .data(marks).enter()
-                    .append("image")
-                    .attr("width", 30)
-                    .attr("height", 30)
+                    // .append("image")
+                    // .attr("width", 30)
+                    // .attr("height", 30)
+                    .append("circle")
                     .attr("class", "mark")
                     // .attr("xlink:href", function(){
                     //     if(d.level === "помірно гострий") {
@@ -249,14 +257,16 @@ var drawCases = function (df, region) {
                     //         return 'img/pin_grey.svg'
                     //     }
                     // })
-                    .attr("xlink:href", 'img/pin_red.svg')
-                    .attr("x", function () {
+                    // .attr("xlink:href", 'img/pin_red.svg')
+                    .attr("cx", function () {
                         console.log(projection(marks));
                         return projection(marks)[0];
                     })
-                    .attr("y", function () {
+                    .attr("cy", function () {
                         return projection(marks)[1];
                     })
+                    .attr("r", 3)
+                    .attr("fill", "red")
 
             })
                 .on("mouseout", function () {
