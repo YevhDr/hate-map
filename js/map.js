@@ -396,60 +396,145 @@ var drawCases = function (df, region) {
 };
 
 
+var types = [
+    { key: "АТО", value: 0 },
+    { key: "ОТГ", value: 0 },
+    { key: "девіантний", value: 0 },
+    { key: "земельний", value: 0 },
+    { key: "міжнаціональний", value: 0 },
+    { key: "освіта", value: 0 },
+    { key: "політичний", value: 0 },
+    { key: "управлінський", value: 0 },
+    { key: "реформа медицини", value: 0 },
+    { key: "бізнесовий", value: 0 }
+];
+// var types = ["АТО", "ОТГ", "девіантний", "земельний", "міжнаціональний", "освіта", "політичний", "управлінський", "реформа медицини", "бізнесовий"]
+
+
 function drawBarChart(df, container) {
 
     $(container).empty();
     $(".annotation").remove();
 
-
-    var margin = {top: 20, right: 20, bottom: 30, left: 150},
-        width = 300 - margin.left - margin.right,
-        height = 250 - margin.top - margin.bottom;
-
-
-    var y = d3.scaleBand()
-        .range([height, 0]);
-
-    var x = d3.scaleLinear()
-        .range([0, width]);
-
-
-    var svg = d3.select(container).append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform",
-            "translate(" + margin.left + "," + margin.top + ")");
-
-
     df.forEach(function (d) {
         d.value = +d.value;
     });
 
+    var margin = {top: 20, right: 20, bottom: 30, left: 0},
+        width = 300 - margin.left - margin.right,
+        height = 350 - margin.top - margin.bottom;
+
+
+    var svg = d3.select(container).append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
+
+    var x = d3.scaleLinear().range([0, width]);
+    var y = d3.scaleBand().range([height, 0]);
+
+    var bar = svg.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var yAxisDomain = [];
+    var yAxisDomainKeysPre = [];
+
+    df.forEach(function(d) {
+        yAxisDomain.push(d)
+    });
+
+    df.forEach(function(d) {
+        yAxisDomainKeysPre.push(d.key)
+    });
+
+    types.forEach(function(d) {
+        if(!yAxisDomainKeysPre.includes(d.key)) {
+            yAxisDomain.push(d)
+        }
+    });
+
+    yAxisDomain.sort(function(a, b) { return a.value - b.value; });
+
+    var yAxisDomainKeys = [];
+    yAxisDomain.forEach(function(d) {
+        yAxisDomainKeys.push(d.key)
+    });
+
     x.domain([0, 14]);
+    y.domain(yAxisDomainKeys);
+
+    bar.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")");
+
+    bar.append("g")
+        .attr("class", "y axis")
+        .call(d3.axisLeft(y));
+
+    bar.selectAll(".bar")
+        .data(yAxisDomain)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", 0)
+        .attr("height", 8)
+        .attr("y", function(d) { return y(d.key); })
+        .attr("width", function(d) { return x(d.value); })
+        .attr("fill", "red");
+
+
+    bar.selectAll(".text")
+        .data(yAxisDomain)
+        .enter().append("text")
+        .attr("class", "bar-labels")
+        //.attr("x", function(d) { return x(d.sales); })
+        .attr("x", x(0))
+        .attr("y", function (d) {
+            return y(d.key) - 3;
+        })
+        .attr("fill", "red")
+        .text(function(d) {
+            console.log(d);
+            return d.key + ", " + d.value;
+        });
 
     // y.domain(df.map(function (d) {
     //     return d.key;
     // }));
 
-    y.domain(["бізнесовий", "управлінський",
-        "політичний", "екологічний", "ОТГ", "земельний",
-        "міжнаціональний", "АТО", "реформа медицини", "девіантний"]);
 
 
-    svg.selectAll(".bar")
-        .data(df)
-        .enter().append("rect")
-        .attr("class", "bar")
-        //.attr("x", function(d) { return x(d.sales); })
-        .attr("width", function (d) {
-            return x(d.value);
-        })
-        .attr("y", function (d) {
-            return y(d.key);
-        })
-        .attr("height", 10)
-        .attr("fill", "red");
+    // svg.selectAll(".bar")
+    //     .data(df)
+    //     .enter().append("rect")
+    //     .attr("class", "bar")
+    //     //.attr("x", function(d) { return x(d.sales); })
+    //     .attr("width", function (d) {
+    //         return x(d.value);
+    //     })
+    //     .attr("y", function (d) {
+    //         return y(d.key);
+    //     })
+    //     .attr("height", 8)
+    //     .attr("fill", "red");
+    //
+    // svg.selectAll(".text")
+    //     .data(df)
+    //     .enter().append("text")
+    //     .attr("class", "bar-labels")
+    //     //.attr("x", function(d) { return x(d.sales); })
+    //     .attr("x", x(0))
+    //     .attr("y", function (d) {
+    //         return y(d.key) - 3;
+    //     })
+    //     .attr("height", 8)
+    //     .attr("fill", "red")
+    //     .text(function(d) {
+    //         console.log(d);
+    //         return d.key;
+    //     });
+
+    // svg.selectAll(".bar").sort(function(a, b){
+    //     return d3.ascending(a,b)
+    // });
 
 // add the x Axis
 //     svg.append("g")
@@ -457,8 +542,8 @@ function drawBarChart(df, container) {
 //         .call(d3.axisBottom(x));
 
 // add the y Axis
-    svg.append("g")
-        .call(d3.axisLeft(y));
+//     svg.append("g")
+//         .call(d3.axisLeft(y));
 
     svg.selectAll("g.tick text")
         .attr("dy", 0);

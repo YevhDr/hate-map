@@ -92,8 +92,8 @@ body {
   min-height: 90vh;
   position: relative;
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 300px 100px auto; }
+  grid-template-columns: minmax(700px, 2fr) minmax(300px, 1fr);
+  grid-template-rows: auto auto; }
   @media (max-width: 800px) and (orientation: landscape) {
     #content {
       display: block; } }
@@ -149,11 +149,14 @@ p {
 
 #mapid {
   position: relative;
-  grid-row: 1/2;
+  grid-row: 1/3;
   grid-column: 1/2;
   width: 100%;
-  height: 90vh; }
+  height: auto;
+  display: grid;
+  grid-template-rows: 50vw auto; }
   #mapid svg {
+    grid-row: 1/2;
     position: absolute;
     top: 0;
     left: 0; }
@@ -165,6 +168,13 @@ p {
       pointer-events: none; }
   #mapid svg#adm1 {
     pointer-events: none; }
+  #mapid #donors {
+    grid-row: 2/3;
+    width: 80%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 70px 90px auto;
+    grid-column-gap: 20px; }
 
 #cases {
   grid-row: 1/-1;
@@ -177,7 +187,7 @@ p {
       margin: auto;
       max-height: 200vh; } }
   #cases p.intro {
-    margin: 10px auto auto 5%; }
+    margin: 10px auto auto 0; }
 
 @media (max-width: 800px) {
   #jpeg-map {
@@ -202,24 +212,20 @@ p {
 .indicators {
   width: 30px; }
 
-#bar {
-  position: absolute;
-  top: 80px;
-  left: 0; }
-  #bar p {
-    color: lightgrey; }
-  #bar #bar-chart svg text {
-    font-family: 'Play', sans-serif;
-    fill: black;
-    font-size: 13px; }
-  #bar #bar-chart svg path.domain {
-    display: none; }
-  #bar #bar-chart svg g.tick line {
-    opacity: 0; }
+#bar p {
+  color: lightgrey; }
+#bar #bar-chart svg text {
+  font-family: 'Play', sans-serif;
+  fill: grey;
+  font-size: 12px; }
+#bar #bar-chart svg path.domain {
+  display: none; }
+#bar #bar-chart svg g.tick line {
+  opacity: 0; }
 
 #source {
   display: block;
-  margin: 20px 5%; }
+  margin: 20px 0; }
   #source a {
     text-decoration: none; }
   #source button {
