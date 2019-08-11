@@ -1,7 +1,7 @@
 window.screen.orientation.onchange = function(e) {
     // alert("I'was turned")
     location.reload();
-}
+};
 
 
 var rect = $("#mapid")[0].getBoundingClientRect();

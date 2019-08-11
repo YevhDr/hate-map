@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>Інтерактивна мапа соціальних конфліктів півдня Одеської області</title>
+<title>Інтерактивна мапа соціальних конфліктів півдня Одеської області</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:300i,400,400i,500,700,700i,800,800i,900|Cormorant+Garamond:300i,400,400i,500,600,600i,700,700i|PT+Sans|Play:400,700|Roboto+Mono:300i,400,400i,500,500i,700,700i|Roboto:300i,400,400i,500,500i,700,700i|Source+Sans+Pro:400,400i,600,600i,700,700i,900&amp;subset=cyrillic-ext" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css"/>
-</head>
+<link href="https://fonts.googleapis.com/css?family=Didact+Gothic|IBM+Plex+Sans|Montserrat|Noto+Sans&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin=""/>
+
+<link rel="stylesheet" href="css/style.css"/>
+
 <body>
 
 <div id="myModal">
@@ -40,11 +45,11 @@
             <option value=''>показати всі</option>
             <option value='бізнесовий'>бізнесові конфлікти</option>
             <option value='управлінський'>управлінські конфлікти</option>
-            <option value='девіантний'>девіантні (пов’язані із вчиненням злочинів)</option>
+            <option value='девіантний'>злочини</option>
             <option value='реформа медицини'>повʼязані з медреформою</option>
             <option value='міжнаціональний'>міжнаціональні конфлікти</option>
-            <option value='ОТГ'>ОТГ (повʼязані з адміністративною реформою)</option>
-            <option value='АТО'>АТО (повʼязані з АТО)</option>
+            <option value='ОТГ'>адміністративна реформа</option>
+            <option value='АТО'>повʼязані з АТО</option>
             <option value='освіта'>конфлікт в сфері освіти</option>
             <option value='політичний'>політичні конфлікти</option>
 
@@ -52,12 +57,15 @@
         </div>
     </div>
 
-
-
+    <!--<div id="map" style="width:600px; height:600px;"></div>-->
 
     <div id="mapid">
-        <svg id="adm2" width="100%" viewBox="0 0 1200 900"></svg>
-        <svg id="adm1" width="100%" viewBox="0 0 1200 900"></svg>
+        <div id="map" ></div>
+
+        <!--<svg id="adm2" width="100%" viewBox="0 0 1200 900"></svg>-->
+        <!--<svg id="adm1" width="100%" viewBox="0 0 1200 900"></svg>-->
+
+
 
         <div id="donors">
             <img style="width:100%; grid-column:1/2" src="img/zed2.jpg"/>
@@ -72,7 +80,7 @@
         <div id="details">
             <!--<img id="jpeg-map" src="img/small_map.png" style="width:80%; margin:0 auto;"/>-->
             <p class="intro">Протягом трьох місяців ми проводили пілотний моніторінг конфліктів в регіоні і нанесли їх на карту.</p>
-            <p class="intro">Моніторинг охопив <span style="color:red;"><b>Ізмаїльський, Ренійський, Кілійський, Болградський і Татарбунарський</b></span> райони Одеської області. </p>  <p class="intro"><span style="color:red;"><b>Клікніть на район на карті</b></span>, щоб подивитись детальну інформацію по зафіксованим конфліктам.</p>
+            <p class="intro">Моніторинг охопив <span style="color:#CB93B2;"><b>Ізмаїльський, Ренійський, Кілійський, Болградський і Татарбунарський</b></span> райони Одеської області. </p>  <p class="intro"><span style="color:#CB93B2;"><b>Клікніть на район на карті</b></span>, щоб подивитись детальну інформацію по зафіксованим конфліктам.</p>
             <p class="intro">Карта буде наповнюватись. Щоб повідомити про конфлікт, тисніть на відповідний лінк внизу карти і заповніть онлайн-форму.</p>
             </div>
 
@@ -82,14 +90,14 @@
             <div id="bar">
                 <div id="bar-chart"></div>
             </div>
-            <p><span style="background-color: #ff8b4c;"></span>гострий <span style="margin-left:15px; background-color: yellow;"></span>помірний <span style="margin-left:15px; background-color: lightyellow;"></span>негострий</p>
+            <p><span style="background-color: #CB93B2;"></span>гострий <span style="margin-left:15px; background-color: #FFE4FC;"></span>помірний <span style="margin-left:15px; border: 1px solid lightgrey;"></span>негострий</p>
         </div>
 
             <div id="cases-container"></div>
 
         <div id="source">
-            <a href="methodology.pdf" target="_blank"><button>МЕТОДОЛОГІЯ</button></a>
-            <a href="zvit.pdf" target="_blank"><button>ЗВІТ</button></a>
+            <a href="methodology.pdf" target="_blank">МЕТОДОЛОГІЯ</a>
+            <a href="zvit.pdf" target="_blank">ЗВІТ</a>
             </div>
         </div>
     </div>
@@ -100,13 +108,15 @@
 
 </div>
 <script src="lib/jquery-2.1.4.min.js"></script>
-<script src ="https://d3js.org/d3.v4.min.js"></script>
-<!--<script src ="lib/swoopy-drag.js"></script>-->
-<script src ="lib/d3v4jetpack.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+<script src="lib/leaflet.ajax.min.js"></script>
+<!--<script src ="lib/d3v4jetpack.js"></script>-->
 
 <!--<script src="https://d3js.org/d3-dsv.v1.min.js"></script>-->
 <!--<script src="https://d3js.org/d3-fetch.v1.min.js"></script>-->
-<script src="js/map.js"></script>
+<!--<script src="js/map.js"></script>-->
+<script src="js/leafletTry.js"></script>
 
 
     <a id="report" href="https://docs.google.com/forms/d/e/1FAIpQLSf6oTSv6YPDOLfBzS1QZu0JFsQa9uDFQApbAI2coEkv1mptpg/viewform" target="_blank">Повідомити про конфлікт</a>
