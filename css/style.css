@@ -1,10 +1,10 @@
 @keyframes color-change {
   0% {
-    color: #CB93B2; }
+    color: grey; }
   50% {
     color: grey; }
   100% {
-    color: #CB93B2; } }
+    color: red; } }
 body {
   color: #484D60 !important;
   margin: 0;
