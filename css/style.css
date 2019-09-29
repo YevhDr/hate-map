@@ -11,11 +11,6 @@ body {
   padding: 0;
   line-height: 1.6;
   font-family: 'Montserrat', sans-serif; }
-  @media (max-width: 800px) and (orientation: portrait) {
-    body {
-      height: 100vh;
-      overflow-y: hidden;
-      overflow-x: hidden; } }
 
 path {
   vector-effect: non-scaling-stroke; }
@@ -23,29 +18,11 @@ path {
 .leaflet-container {
   background-color: WHITE; }
 
-#myModal {
-  width: 100%;
-  position: fixed;
-  display: none;
-  top: 0;
-  left: 0;
-  height: 150vh;
-  background-color: #333333;
-  z-index: 2000; }
-  @media (max-width: 800px) and (orientation: portrait) {
-    #myModal {
-      display: flex; } }
-  #myModal #warning {
-    text-align: center;
-    width: 60%;
-    margin: 25vh auto;
-    color: white;
-    font-weight: 800; }
-
 #header {
-  background-color: lightgrey;
-  height: 100vh;
-  display: flex; }
+  background-color: #E6EFFF;
+  min-height: 30vh;
+  display: flex;
+  margin-bottom: 50px; }
   #header #logos {
     width: 100%;
     position: absolute;
@@ -79,9 +56,6 @@ path {
 #report {
   font-size: 18pt;
   text-decoration: none;
-  position: absolute;
-  left: 50px;
-  bottom: 10px;
   z-index: 1800;
   font-weight: bold;
   color: white;
@@ -97,11 +71,14 @@ path {
 
 #content {
   min-height: 90vh;
+  max-width: 1600px;
+  margin: auto;
   position: relative;
   display: grid;
-  grid-template-columns: minmax(700px, 2fr) minmax(300px, 1fr);
-  grid-template-rows: auto auto; }
-  @media (max-width: 800px) and (orientation: landscape) {
+  grid-template-columns: 1.5fr 1fr;
+  grid-template-rows: max-content 80% max-content;
+  grid-gap: 10px; }
+  @media (max-width: 800px) {
     #content {
       display: block; } }
 
@@ -110,24 +87,27 @@ h1 {
   width: 70%;
   margin: 10px auto 10px 0; }
 
-p {
-  font-size: 18px; }
-
 #filter {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 1000;
+  width: 90%;
+  margin: auto;
   grid-row: 1/2;
   grid-column: 1/2;
   display: flex;
-  height: max-content; }
+  height: max-content;
+  align-items: center; }
+  @media (max-width: 800px) {
+    #filter {
+      display: block; } }
   #filter div {
     margin: auto 50px; }
+    @media (max-width: 800px) {
+      #filter div {
+        margin: 0; } }
   #filter h2 {
     font-size: 18px; }
   #filter #select {
-    width: 100%;
+    margin-left: 10px;
+    width: max-content;
     font-size: 15px;
     font-family: 'Montserrat', sans-serif; }
 
@@ -145,10 +125,6 @@ p {
   grid-column: 1/2;
   height: auto;
   pointer-events: none; }
-  #legend p {
-    display: block;
-    -webkit-margin-before: 0;
-    -webkit-margin-after: 0; }
   #legend h2 {
     font-size: 16px; }
   #legend p span {
@@ -157,27 +133,28 @@ p {
     margin-right: 10px;
     display: inline-block; }
 
-#mapid {
+#map {
   position: relative;
-  grid-row: 1/3;
+  grid-row: 2/3;
   grid-column: 1/2;
-  width: 100%;
-  height: auto;
+  width: 95%;
+  height: 100%;
+  margin: auto;
+  min-height: 300px;
+  display: grid; }
+
+svg#adm1 {
+  pointer-events: none; }
+
+#donors {
+  font-size: 13px;
+  grid-column: 1/2;
+  grid-row: 3/4;
+  width: 95%;
+  margin: auto;
   display: grid;
-  grid-template-rows: 50vw auto; }
-  #mapid #map {
-    margin: auto;
-    width: 95%;
-    height: 90vh; }
-  #mapid svg#adm1 {
-    pointer-events: none; }
-  #mapid #donors {
-    grid-row: 2/3;
-    width: 80%;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 70px 90px auto;
-    grid-column-gap: 20px; }
+  grid-template-columns: 70px 90px auto;
+  grid-column-gap: 20px; }
 
 #cases {
   grid-row: 1/-1;
@@ -190,7 +167,6 @@ p {
       margin: auto;
       max-height: 200vh; } }
   #cases p.intro {
-    width: 80%;
     margin: 10px auto auto 0; }
 
 @media (max-width: 800px) {
@@ -233,7 +209,7 @@ p {
 #source {
   font-family: 'Montserrat', sans-serif;
   display: block;
-  margin: 20px 0; }
+  margin: 50px 0 20px 0; }
   #source a {
     color: #484D60;
     font-size: 15pt;
@@ -241,5 +217,11 @@ p {
     display: block;
     text-decoration: none;
     margin-bottom: 20px; }
+
+.leaflet-popup-content-wrapper {
+  background-color: white;
+  color: grey;
+  font-size: 17px;
+  max-width: 300px; }
 
 /*# sourceMappingURL=style.css.map */

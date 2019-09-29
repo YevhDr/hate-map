@@ -3,9 +3,16 @@
  */
 var selectedRegion;
 
+// var $pink = "#CB93B2";
 
-var map = L.map('map', {minZoom: 6,
-    maxZoom: 10}).setView([48.35, 29.51], 6);
+var $pink = "grey";
+
+
+var map = L.map('map', {minZoom: 6,  maxZoom: 10}).setView([46.0, 29.8], 8);
+
+
+setTimeout(function(){ map.invalidateSize()}, 400);
+
 
     //
     // L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
@@ -19,12 +26,12 @@ map.zoomControl.setPosition('topright');
 map.attributionControl.setPosition('bottomleft');
 
 function getColor(d) {
-    return d === 'Ізмаїльський' ? '#484D60' :
-        d === 'Болградський' ? '#484D60' :
-            d === 'Кілійський'  ? '#484D60' :
-                d === 'Ренійський'  ? '#484D60' :
-                    d === 'Татарбунарський'   ? '#484D60' :
-                        '#E6EFFF';
+    return d === 'Ізмаїльський' ? $pink :
+        d === 'Болградський' ? $pink :
+            d === 'Кілійський'  ? $pink :
+                d === 'Ренійський'  ? $pink :
+                    d === 'Татарбунарський'   ? $pink :
+                        'white';
 }
 
 //#ffffbf
@@ -32,19 +39,32 @@ function style(feature) {
     return {
         fillColor: getColor(feature.properties.NAME_2),
         weight: 1,
-        opacity: 0.5,
-        color: '#E9E9E9',
+        opacity: 1,
+        color: 'lightgrey',
         //dashArray: '3',
-        fillOpacity: 1
+        fillOpacity: 0.8
     };
 }
 
+function highlight(ob) {
+    if(ob.feature.properties.NAME_2 == 'Ізмаїльський' ||
+        ob.feature.properties.NAME_2 == 'Болградський'||
+        ob.feature.properties.NAME_2 == 'Кілійський'||
+        ob.feature.properties.NAME_2 == 'Ренійський' ||
+        ob.feature.properties.NAME_2 == 'Татарбунарський'){
+        return {
+            fillColor: $pink,
+            fillOpacity: 1
+        };
+    }
+
+}
+
+
 
 function whenClicked(e) {
-    console.log(e.target.feature.properties.NAME_2);
     selectedRegion = e.target.feature.properties.NAME_2;
     var container = d3.select("#cases");
-
     d3.csv("data/data_correct.csv", function (mydata) {
 
             var dataForBarchart = mydata.filter(function (d) {
@@ -75,19 +95,23 @@ function whenClicked(e) {
 
 
 function onEachFeature(feature, layer) {
+    var polygonCenter = layer.getBounds().getCenter();
 
     layer.on({
         click: whenClicked
     });
-    $("#legend").css("display", "block");
+    layer.on("click", function (e) {
+        geojsonLayer.setStyle(style); //resets layer colors
+        layer.setStyle(highlight(e.target));  //highlights selected.
+        $("#legend").css("display", "block");
+    });
+
     $("text").css("font-weight", "100");
     $("text:contains('" + feature.properties.NAME_2 + "')").css("font-weight", "800");
-
     }
 
 
 $('select').on('change', function () {
-    console.log(selectedRegion);
     d3.csv("data/data_correct.csv", function (mydata) {
         console.log(selectedRegion === undefined);
         if (selectedRegion === undefined){
@@ -96,10 +120,6 @@ $('select').on('change', function () {
             drawCases(mydata, selectedRegion);
 
         }
-
-
-
-
     });
 });
 
@@ -112,7 +132,7 @@ var additionalLayer = new L.LayerGroup();
 var geojsonLayer = new L.GeoJSON.AJAX("data/ukr_adm2.geojson", { style: style, onEachFeature: onEachFeature } );
 geojsonLayer.addTo(additionalLayer);
 additionalLayer.addTo(map);
-
+var marker;
 
 
 var drawCases = function (df, region) {
@@ -163,41 +183,28 @@ var drawCases = function (df, region) {
                 ;
 
             cases.each(function (d) {
-                // d3.select(this)
-                //     .on("mouseover", function (d) {
-                //     $(".mark").remove();
-                //     d.lon = +d.lon;
-                //     d.lat = +d.lat;
-                //
-                //     var marks = [d.lon, d.lat];
-                //
-                //
-                //     map.selectAll(".mark")
-                //         .data(marks).enter()
-                //         .append("circle")
-                //         .attr("class", "mark")
-                //         .attr("cx", function () {
-                //             console.log(projection(marks));
-                //             return projection(marks)[0];
-                //         })
-                //         .attr("cy", function () {
-                //             return projection(marks)[1];
-                //         })
-                //         .attr("r", 3)
-                //         .attr("fill", "red")
-                //
-                // })
-                //     .on("mouseout", function () {
-                //         $(".mark").remove();
-                //     })
-                // ;
+                d3.select(this)
+                .on("mouseover", function (d) {
+                    $(".mark").remove();
+                    var popup = d.place;
+                    var mark = [+d.lat, +d.lon];
+
+
+                    if (marker) { // check
+                        map.removeLayer(marker); // remove
+                    }
+                    marker = new L.Marker(mark); // set
+                    marker.bindPopup(popup).openPopup();
+
+                    marker.addTo(map);
+                });
 
 
                 d3.select(this).style("background-color", function (d) {
                     if (d.level === "помірно гострий") {
-                        return "#FFE4FC"
+                        return "#FFD872"
                     } else if (d.level === "гострий") {
-                        return "#CB93B2"
+                        return "#FFBC84"
                     } else if (d.level === "негострий") {
                         return "white"
                     }
