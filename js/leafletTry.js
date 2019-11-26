@@ -3,12 +3,11 @@
  */
 var selectedRegion;
 
-// var $pink = "#CB93B2";
 
-var $pink = "grey";
+var $pink = "#F69291";
 
 
-var map = L.map('map', {minZoom: 6,  maxZoom: 10}).setView([46.0, 29.8], 8);
+var map = L.map('map', {minZoom: 6,  maxZoom: 10}).setView([46.4, 30.6], 8);
 
 
 setTimeout(function(){ map.invalidateSize()}, 400);
@@ -40,7 +39,7 @@ function style(feature) {
         fillColor: getColor(feature.properties.NAME_2),
         weight: 1,
         opacity: 1,
-        color: 'lightgrey',
+        color: '#BFA5A4',
         //dashArray: '3',
         fillOpacity: 0.8
     };
