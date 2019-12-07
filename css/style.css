@@ -155,6 +155,9 @@ svg#adm1 {
   margin: auto;
   display: flex;
   align-items: center; }
+  @media (max-width: 800px) {
+    #donors {
+      display: block; } }
 
 #cases {
   grid-row: 1/-1;
