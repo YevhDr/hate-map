@@ -3,6 +3,9 @@
  */
 var selectedRegion;
 
+const array = ['Ізмаїльський', 'Болградський', 'Кілійський', 'Ренійський', 'Татарбунарський', 'Березівський', 'Біляївський',
+             'Білгород-Дністровський', 'Кодимський', 'Лиманський', 'Любашівський', 'Овідіопольський', 'Одеса', 'Подільський', 'Роздільнянський',
+             'Савранський', 'Саратський', 'Тарутинський', 'Ширяївський'];
 
 var $pink = "#F69291";
 
@@ -13,41 +16,19 @@ var map = L.map('map', {minZoom: 6,  maxZoom: 10}).setView([47.5, 30.8], 7);
 setTimeout(function(){ map.invalidateSize()}, 400);
 
 
-    //
-    // L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-    //     attribution: 'Map tiles by Carto',
-    //     minZoom: 6,
-    //     maxZoom: 10
-    // }).addTo(map);
+
+    L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+        attribution: 'Map tiles by Carto',
+        minZoom: 6,
+        maxZoom: 10
+    }).addTo(map);
 
 map.scrollWheelZoom.disable();
 map.zoomControl.setPosition('topright');
 map.attributionControl.setPosition('bottomleft');
 
-function getColor(d) {
-    return d === 'Ізмаїльський' ? $pink :
-        d === 'Болградський' ? $pink :
-            d === 'Кілійський'  ? $pink :
-                d === 'Ренійський'  ? $pink :
-                    d === 'Татарбунарський'   ? $pink :
-                        d === 'Березівський'   ? $pink :
-                            d === 'Білгород-Дністровський'   ? $pink :
-                                d === 'Біляївський'   ? $pink :
-                                    d === 'Кодимський'   ? $pink :
-                                        d === 'Лиманський'   ? $pink :
-                                            d === 'Любашівський'   ? $pink :
-                                                d === 'Овідіопольський'   ? $pink :
-                                                    d === 'Одеса'   ? $pink :
-                                                        d === 'Подільський'   ? $pink :
-                                                            d === 'Роздільнянський'   ? $pink :
-                                                                d === 'Савранський'   ? $pink :
-                                                                    d === 'Саратський'   ? $pink :
-                                                                        d === 'Тарутинський'   ? $pink :
-                                                                            d === 'Ширяївський'   ? $pink :
-                        'white';
-}
+function getColor(d) { return array.includes(d) ? $pink : "white"; }
 
-//#ffffbf
 function style(feature) {
     return {
         fillColor: getColor(feature.properties.NAME_2),
@@ -60,28 +41,7 @@ function style(feature) {
 }
 
 function highlight(ob) {
-    if(ob.feature.properties.NAME_2 == 'Ізмаїльський' ||
-        ob.feature.properties.NAME_2 == 'Болградський'||
-        ob.feature.properties.NAME_2 == 'Кілійський'||
-        ob.feature.properties.NAME_2 == 'Ренійський' ||
-        ob.feature.properties.NAME_2 == 'Татарбунарський'||
-        ob.feature.properties.NAME_2 === 'Березівський'||
-        ob.feature.properties.NAME_2 === 'Біляївський'||
-        ob.feature.properties.NAME_2 === 'Білгород-Дністровський'||
-        ob.feature.properties.NAME_2 === 'Кодимський'||
-        ob.feature.properties.NAME_2 === 'Лиманський'||
-        ob.feature.properties.NAME_2 === 'Любашівський'||
-        ob.feature.properties.NAME_2 === 'Овідіопольський'||
-        ob.feature.properties.NAME_2 === 'Одеса'||
-        ob.feature.properties.NAME_2 === 'Подільський'||
-        ob.feature.properties.NAME_2 === 'Роздільнянський'||
-        ob.feature.properties.NAME_2 === 'Савранський'||
-        ob.feature.properties.NAME_2 === 'Саратський'||
-        ob.feature.properties.NAME_2 === 'Тарутинський'||
-        ob.feature.properties.NAME_2 === 'Ширяївський'
-
-
-    ){
+    if(array.includes(ob.feature.properties.NAME_2)){
         return {
             fillColor: $pink,
             fillOpacity: 1
@@ -168,26 +128,7 @@ var marker;
 
 
 var drawCases = function (df, region) {
-    if (region === 'Ізмаїльський' ||
-        region === 'Болградський' ||
-        region === 'Кілійський' ||
-        region === 'Ренійський' ||
-        region === 'Татарбунарський'||
-        region === 'Березівський'||
-        region === 'Біляївський'||
-        region === 'Білгород-Дністровський'||
-        region === 'Кодимський'||
-        region === 'Лиманський'||
-        region === 'Любашівський'||
-        region === 'Овідіопольський'||
-        region === 'Одеса'||
-        region === 'Подільський'||
-        region === 'Роздільнянський'||
-        region === 'Савранський'||
-        region === 'Саратський'||
-        region === 'Тарутинський'||
-        region === 'Ширяївський'
-    ) {
+    if (array.includes(region)) {
 
         var selectedType = $("#select option:selected").val();
         var regionData = df.filter(function (d) {
