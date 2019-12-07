@@ -216,10 +216,17 @@ var drawCases = function (df, region) {
 
 
         d3.select("#paste-region")
-            .html(selectedRegion + " район");
+            .html(function(){
+                if(selectedRegion != "Одеса") {
+                    return selectedRegion + " район";
+                } else {
+                    return selectedRegion
+                }
+            });
+
+
 
         if (regionData.length > 0) {
-
             var cases = d3.select("#cases-container")
                     .selectAll("div")
                     .data(regionData)
