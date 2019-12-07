@@ -267,6 +267,13 @@ var drawCases = function (df, region) {
 
                 d3.select(this)
                     .append("p")
+                    .attr("class", "date")
+                    .text(function (d) {
+                        return d.start
+                    });
+
+                d3.select(this)
+                    .append("p")
                     .attr("class", "title")
                     .text(function (d) {
                         return d.summary
