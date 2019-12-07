@@ -7,7 +7,7 @@ var selectedRegion;
 var $pink = "#F69291";
 
 
-var map = L.map('map', {minZoom: 6,  maxZoom: 10}).setView([46.8, 30.6], 7.5);
+var map = L.map('map', {minZoom: 6,  maxZoom: 10}).setView([47.5, 30.8], 7);
 
 
 setTimeout(function(){ map.invalidateSize()}, 400);
