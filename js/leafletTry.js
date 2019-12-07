@@ -7,7 +7,7 @@ var selectedRegion;
 var $pink = "#F69291";
 
 
-var map = L.map('map', {minZoom: 6,  maxZoom: 10}).setView([46.4, 30.6], 8);
+var map = L.map('map', {minZoom: 6,  maxZoom: 10}).setView([46.8, 30.6], 7.5);
 
 
 setTimeout(function(){ map.invalidateSize()}, 400);
@@ -30,6 +30,20 @@ function getColor(d) {
             d === 'Кілійський'  ? $pink :
                 d === 'Ренійський'  ? $pink :
                     d === 'Татарбунарський'   ? $pink :
+                        d === 'Березівський'   ? $pink :
+                            d === 'Білгород-Дністровський'   ? $pink :
+                                d === 'Біляївський'   ? $pink :
+                                    d === 'Кодимський'   ? $pink :
+                                        d === 'Лиманський'   ? $pink :
+                                            d === 'Любашівський'   ? $pink :
+                                                d === 'Овідіопольський'   ? $pink :
+                                                    d === 'Одеса'   ? $pink :
+                                                        d === 'Подільський'   ? $pink :
+                                                            d === 'Роздільнянський'   ? $pink :
+                                                                d === 'Савранський'   ? $pink :
+                                                                    d === 'Саратський'   ? $pink :
+                                                                        d === 'Тарутинський'   ? $pink :
+                                                                            d === 'Ширяївський'   ? $pink :
                         'white';
 }
 
@@ -50,7 +64,25 @@ function highlight(ob) {
         ob.feature.properties.NAME_2 == 'Болградський'||
         ob.feature.properties.NAME_2 == 'Кілійський'||
         ob.feature.properties.NAME_2 == 'Ренійський' ||
-        ob.feature.properties.NAME_2 == 'Татарбунарський'){
+        ob.feature.properties.NAME_2 == 'Татарбунарський'||
+
+        ob.feature.properties.NAME_2 === 'Березівський'||
+        ob.feature.properties.NAME_2 === 'Біляївський'||
+        ob.feature.properties.NAME_2 === 'Білгород-Дністровський'||
+        ob.feature.properties.NAME_2 === 'Кодимський'||
+        ob.feature.properties.NAME_2 === 'Лиманський'||
+        ob.feature.properties.NAME_2 === 'Любашівський'||
+        ob.feature.properties.NAME_2 === 'Овідіопольський'||
+        ob.feature.properties.NAME_2 === 'Одеса'||
+        ob.feature.properties.NAME_2 === 'Подільський'||
+        ob.feature.properties.NAME_2 === 'Роздільнянський'||
+        ob.feature.properties.NAME_2 === 'Савранський'||
+        ob.feature.properties.NAME_2 === 'Саратський'||
+        ob.feature.properties.NAME_2 === 'Тарутинський'||
+        ob.feature.properties.NAME_2 === 'Ширяївський'
+
+
+    ){
         return {
             fillColor: $pink,
             fillOpacity: 1
@@ -64,7 +96,9 @@ function highlight(ob) {
 function whenClicked(e) {
     selectedRegion = e.target.feature.properties.NAME_2;
     var container = d3.select("#cases");
-    d3.csv("data/data_correct.csv", function (mydata) {
+    // d3.csv("data/data_correct.csv", function (mydata) {
+    d3.csv("data/data_2019.csv", function (mydata) {
+
 
             var dataForBarchart = mydata.filter(function (d) {
                 return d.district === selectedRegion
@@ -111,7 +145,7 @@ function onEachFeature(feature, layer) {
 
 
 $('select').on('change', function () {
-    d3.csv("data/data_correct.csv", function (mydata) {
+    d3.csv("data/data_2019.csv", function (mydata) {
         console.log(selectedRegion === undefined);
         if (selectedRegion === undefined){
             alert("Оберіть район на карті")
@@ -139,7 +173,23 @@ var drawCases = function (df, region) {
         region === 'Болградський' ||
         region === 'Кілійський' ||
         region === 'Ренійський' ||
-        region === 'Татарбунарський') {
+        region === 'Татарбунарський'||
+
+        region === 'Березівський'||
+        region === 'Біляївський'||
+        region === 'Білгород-Дністровський'||
+        region === 'Кодимський'||
+        region === 'Лиманський'||
+        region === 'Любашівський'||
+        region === 'Овідіопольський'||
+        region === 'Одеса'||
+        region === 'Подільський'||
+        region === 'Роздільнянський'||
+        region === 'Савранський'||
+        region === 'Саратський'||
+        region === 'Тарутинський'||
+        region === 'Ширяївський'
+    ) {
 
         var selectedType = $("#select option:selected").val();
         var regionData = df.filter(function (d) {
@@ -344,11 +394,13 @@ var types = [
     { key: "девіантний", value: 0 },
     { key: "земельний", value: 0 },
     { key: "міжнаціональний", value: 0 },
-    { key: "освіта", value: 0 },
+    { key: "реформа освіти", value: 0 },
     { key: "політичний", value: 0 },
     { key: "управлінський", value: 0 },
     { key: "реформа медицини", value: 0 },
-    { key: "бізнесовий", value: 0 }
+    { key: "бізнесовий", value: 0 },
+    { key: "екологічний", value: 0 },
+    { key: "права людини", value: 0 }
 ];
 // var types = ["АТО", "ОТГ", "девіантний", "земельний", "міжнаціональний", "освіта", "політичний", "управлінський", "реформа медицини", "бізнесовий"]
 
