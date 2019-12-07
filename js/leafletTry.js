@@ -65,7 +65,6 @@ function highlight(ob) {
         ob.feature.properties.NAME_2 == 'Кілійський'||
         ob.feature.properties.NAME_2 == 'Ренійський' ||
         ob.feature.properties.NAME_2 == 'Татарбунарський'||
-
         ob.feature.properties.NAME_2 === 'Березівський'||
         ob.feature.properties.NAME_2 === 'Біляївський'||
         ob.feature.properties.NAME_2 === 'Білгород-Дністровський'||
@@ -174,7 +173,6 @@ var drawCases = function (df, region) {
         region === 'Кілійський' ||
         region === 'Ренійський' ||
         region === 'Татарбунарський'||
-
         region === 'Березівський'||
         region === 'Біляївський'||
         region === 'Білгород-Дністровський'||
@@ -400,7 +398,9 @@ var types = [
     { key: "реформа медицини", value: 0 },
     { key: "бізнесовий", value: 0 },
     { key: "екологічний", value: 0 },
-    { key: "права людини", value: 0 }
+    { key: "права людини", value: 0 },
+    { key: "релігійний", value: 0 }
+
 ];
 // var types = ["АТО", "ОТГ", "девіантний", "земельний", "міжнаціональний", "освіта", "політичний", "управлінський", "реформа медицини", "бізнесовий"]
 
