@@ -21,6 +21,10 @@ path {
   vector-effect: non-scaling-stroke;
 }
 
+path.hide-me {
+  pointer-events: none !important;
+}
+
 .leaflet-container {
   background-color: WHITE;
 }

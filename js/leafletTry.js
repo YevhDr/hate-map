@@ -9,34 +9,43 @@ const array = ['Ізмаїльський', 'Болградський', 'Кілі
 
 var $pink = "#F69291";
 
+// $(".hide-me").on("click", function(){
+//     $("#legend > h1").css("display", "none")
+// });
+//
+// $(".show-me").on("click", function(){
+//     $("#legend > h1").css("display", "block")
+// });
+
 
 var map = L.map('map', {minZoom: 6,  maxZoom: 10}).setView([47.5, 30.8], 7);
 
 
 setTimeout(function(){ map.invalidateSize()}, 400);
-
-
-
     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
         attribution: 'Map tiles by Carto',
         minZoom: 6,
         maxZoom: 10
     }).addTo(map);
 
+
 map.scrollWheelZoom.disable();
 map.zoomControl.setPosition('topright');
 map.attributionControl.setPosition('bottomleft');
 
-function getColor(d) { return array.includes(d) ? $pink : "white"; }
+
+function getColor(d) { return array.includes(d) ? $pink : 'rgba(255,255,255,0)'; }
 
 function style(feature) {
     return {
         fillColor: getColor(feature.properties.NAME_2),
         weight: 1,
         opacity: 1,
-        color: '#BFA5A4',
+        color: array.includes(feature.properties.NAME_2) ? '#BFA5A4' : 'rgba(255,255,255,0)',
+        //color: 'black',
         //dashArray: '3',
-        fillOpacity: 0.8
+        fillOpacity: 0.8,
+        className: array.includes(feature.properties.NAME_2) ? 'show-me' : 'hide-me'
     };
 }
 
