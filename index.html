@@ -4,11 +4,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
 <title>Інтерактивна мапа соціальних конфліктів півдня Одеської області</title>
 
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i&display=swap&subset=cyrillic,cyrillic-ext" rel="stylesheet">
 
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i&display=swap&subset=cyrillic,cyrillic-ext" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
       integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
       crossorigin=""/>
@@ -16,14 +15,6 @@
 <link rel="stylesheet" href="css/style.css"/>
 
 <body>
-
-<!--<div id="myModal">-->
-    <!--<div id="warning">-->
-        <!--<h2>Рекомендуємо переглядати в широкій орієнтації. Переверніть екран.</h2>-->
-
-    <!--</div>-->
-<!--</div>-->
-
 
 <div id="header">
     <div id="title">
@@ -41,87 +32,77 @@
 
 <div id="content">
     <div id="filter">
-            <h2>Фільтр по типам конфлікту</h2>
-            <select name='types' id='select'>
-                <option value=''>показати всі</option>
-                <option value='бізнесовий'>бізнесові конфлікти</option>
-                <option value='управлінський'>управлінські конфлікти</option>
-                <option value='девіантний'>злочини</option>
-                <option value='реформа медицини'>повʼязані з медреформою</option>
-                <option value='міжнаціональний'>міжнаціональні конфлікти</option>
-                <option value='ОТГ'>адміністративна реформа</option>
-                <option value='АТО'>повʼязані з АТО</option>
-                <option value='реформа освіти'>конфлікт в сфері освіти</option>
-                <option value='політичний'>політичні конфлікти</option>
-                <option value='права людини'>права людини</option>
-                <option value='екологічний'>екологічний</option>
-                <option value='релігійний'>релігійний</option>
-
-            </select>
-
-
+        <h2>Фільтр по типам конфлікту</h2>
+        <select name='types' id='select'>
+            <option value=''>показати всі</option>
+            <option value='бізнесовий'>бізнесові конфлікти</option>
+            <option value='управлінський'>управлінські конфлікти</option>
+            <option value='девіантний'>злочини</option>
+            <option value='реформа медицини'>повʼязані з медреформою</option>
+            <option value='міжнаціональний'>міжнаціональні конфлікти</option>
+            <option value='ОТГ'>адміністративна реформа</option>
+            <option value='АТО'>повʼязані з АТО</option>
+            <option value='реформа освіти'>конфлікт в сфері освіти</option>
+            <option value='політичний'>політичні конфлікти</option>
+            <option value='права людини'>права людини</option>
+            <option value='екологічний'>екологічний</option>
+            <option value='релігійний'>релігійний</option>
+        </select>
     </div>
-
 
 
     <div id="map" ></div>
 
-    <!--<div id="map" style="width:600px; height:600px;"></div>-->
+
     <div id="cases">
         <div id="details">
-            <!--<img id="jpeg-map" src="img/small_map.png" style="width:80%; margin:0 auto;"/>-->
-            <p class="intro">Протягом трьох місяців ми проводили пілотний моніторінг конфліктів в регіоні і нанесли їх на карту.</p>
-            <p class="intro">На першому етапі моніторинг охоплював <span style="font-weight:bold"><b>Ізмаїльський, Ренійський, Кілійський, Болградський і Татарбунарський</b></span> райони Одеської області. Станом на кінець 2019 року додались інші районі. </p>  <p class="intro"><span style="font-weight:bold"><b>Клікніть на район на карті</b></span>, щоб подивитись детальну інформацію по зафіксованим конфліктам.</p>
+            <p class="intro">Моніторинг охопив більшість районів Одеської області.</p>
+            <p class="intro"><span style="font-weight:bold"><b>Клікніть на район на карті</b></span>, щоб подивитись детальну інформацію по зафіксованим конфліктам.</p>
             <p class="intro">Карта буде наповнюватись. Щоб повідомити про конфлікт, тисніть на відповідний лінк внизу карти і заповніть онлайн-форму.</p>
         </div>
 
         <div id="legend">
             <h1><span id="paste-region"></span></h1>
             <p>Кольором позначено ступень важкості конфлікту:</p>
-            <div id="bar">
-                <div id="bar-chart"></div>
-            </div>
+            <!--<div id="bar">-->
+                <!--<div id="bar-chart"></div>-->
+            <!--</div>-->
             <p><span style="background-color: #FFBC84;"></span>гострий <span style="margin-left:15px; background-color: #FFD872;"></span>помірний <span style="margin-left:15px; border: 1px solid lightgrey;"></span>негострий</p>
         </div>
 
+
         <div id="cases-container"></div>
 
+
         <div id="source">
-            <a href="methodology.pdf" target="_blank">МЕТОДОЛОГІЯ (відкриється в новому вікні)</a>
-            <a href="zvit.pdf" target="_blank">ЗВІТ (відкриється в новому вікні)</a>
+            <a href="contacts.pdf" target="_blank">ПОТРІБНА ДОПОМОГА? (контакти медіаторів)</a>
+            <a href="methodology.pdf" target="_blank">МЕТОДОЛОГІЯ ДОСЛІДЖЕННЯ</a>
+            <a href="zvit.pdf" target="_blank">ЗВІТ-2018</a>
         </div>
     </div>
 
 
+    <div class="donors">
+        <img style="width:120px; " src="img/donors/ukrpng.png"/>
+        <img style="width:150px;" src="img/donors/th.png"/>
+        <img style="width:50px; " src="img/donors/alert.png"/>
+        <p style="color:black;">Моніторинг здійснювався Громадською організацією «Регіональний аналітичний центр» в рамках прооекту «Соціальна згуртованість через впровадження практики аналізування конфліктів та їх вирішення через побудову діалогу в громадах Одещини» за фінансування Європейського Союзу через International Alert у партнерстві з Thomson Media
+        </p>
+    </div>
 
-
-    <!--<svg id="adm2" width="100%" viewBox="0 0 1200 900"></svg>-->
-    <!--<svg id="adm1" width="100%" viewBox="0 0 1200 900"></svg>-->
-
-
-
-    <div id="donors">
-            <img style="width:100px; " src="img/zed2.jpg"/>
-            <img style="width:150px;" src="img/rac4-01.png"/>
-            <p style="color:black;">Інтерактивна мапа розроблена в рамках проекту "Розробка пілотної моделі мапування соціальних конфліктів на прикладі п’яти районів півдня Одеської області" Громадською організацією "Регіональний аналітичний центр" спільно з Програмним офісом Форуму громадянської служби миру (forum ZFD) в Україні та за підтримки forum ZFD.
-            </p>
+    <div class="donors">
+        <img style="width:50px; " src="img/zed2.jpg"/>
+        <p style="color:black;">Інтерактивна мапа розроблена в рамках проекту "Розробка пілотної моделі мапування соціальних конфліктів на прикладі п’яти районів півдня Одеської області" Громадською організацією "Регіональний аналітичний центр" спільно з Програмним офісом Форуму громадянської служби миру (forum ZFD) в Україні та за підтримки forum ZFD.
+        </p>
     </div>
 
 </div>
 
 
-
-
-</div>
 <script src="lib/jquery-2.1.4.min.js"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
 <script src="lib/leaflet.ajax.min.js"></script>
-<!--<script src ="lib/d3v4jetpack.js"></script>-->
-
-<!--<script src="https://d3js.org/d3-dsv.v1.min.js"></script>-->
-<!--<script src="https://d3js.org/d3-fetch.v1.min.js"></script>-->
-<!--<script src="js/map.js"></script>-->
 <script src="js/leafletTry.js"></script>
 
 
