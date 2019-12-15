@@ -33,9 +33,8 @@ path.hide-me {
 
 #header {
   background-color: $pink;
-  min-height:30vh;
+  min-height:20vh;
   display:flex;
-  margin-bottom: 50px;
 
   #logos  {
     width:100%;
@@ -71,11 +70,11 @@ path.hide-me {
     margin:auto;
     width:100%;
     text-transform: uppercase;
-    font-size:48px;
+    font-size:35px;
     text-align: center;
     letter-spacing: 1px;
     @media(max-width:800px){
-      font-size:30px;
+      font-size:25px;
     }
   }
 
@@ -83,10 +82,13 @@ path.hide-me {
 }
 
 #report {
-  font-size:18pt;
+  text-transform: uppercase;
+  display: block;
+  font-size:18px;
+  letter-spacing: 2px;
   text-decoration: none;
   z-index:1800;
-  font-weight: bold;
+  margin: 20px 0;
   color:white;
   cursor:pointer;
   -webkit-animation: color-change 1s infinite;
@@ -94,6 +96,10 @@ path.hide-me {
   -o-animation: color-change 1s infinite;
   -ms-animation: color-change 1s infinite;
   animation: color-change 1s infinite;
+
+  @media(max-width: 800px){
+    font-size:12px;
+  }
 }
 
 #report:hover {
@@ -157,7 +163,6 @@ h1 {
 
 
 #legend {
-  width:90%;
   padding-bottom:20px;
   background-color: white;
   display:none;
@@ -204,60 +209,32 @@ h1 {
       pointer-events: none;
     }
 
-    #donors {
-      font-size:15px;
-      grid-column: 1/2;
-      grid-row:3/4;
-      width: 95%;
-      margin:auto;
-      display:flex;
-      align-items: center;
-      @media(max-width: 800px){
-        display: block;
-      }
-    }
-
 
   #cases {
     grid-row:1/3;
     grid-column:2/3;
     max-height:95vh;
     overflow-y: auto;
-    margin-left: 50px;
-    width: 80%;
     @media(max-width:800px){
       width:90vw;
       margin:auto;
       max-height:200vh;
     }
-
       p.intro {
          margin: 10px auto auto 0;
       }
-
-
-  }
-
-  #jpeg-map {
-    @media(max-width:800px){
-      display:none;
-    }
   }
 
   .cases {
-    width:80%;
     border:1px solid #E6EFFF;
     margin:10px;
     padding:10px;
-
-
-
   }
+
 
   .title {
     font-weight: 800;
     width:70%;
-    //margin:10% auto auto 5%;
     cursor:pointer;
   }
 
@@ -276,9 +253,6 @@ h1 {
 
 
   #bar {
-    //position:absolute;
-    //top:80px;
-    //left:0;
 
     p {
       color:lightgrey;
@@ -307,17 +281,40 @@ h1 {
 
 
   #source {
+    max-width:1600px;
+    margin: 0 auto;
+    padding: 10px 0;
     font-family: 'Montserrat', sans-serif;
-    display:block;
-    margin: 50px 0 20px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: space-around;
+    border-bottom: 1px solid grey;
+    @media(max-width: 800px){
+      display: block;
+      padding: 5px 0;
+    }
 
     a {
       color: #484D60;
-      font-size:15pt;
-      font-weight: 800;
+      text-transform: uppercase;
+      font-size:12pt;
       display:block;
       text-decoration: none;
-      margin-bottom: 20px;
+      @media(max-width: 800px){
+        text-align: center;
+        margin-bottom: 5px;
+      }
+    }
+
+    a:nth-child(2) {
+      text-align: center;
+    }
+
+    a:nth-child(3) {
+      text-align: right;
+      @media(max-width: 800px){
+        text-align: center;
+      }
     }
 
   }
@@ -332,7 +329,6 @@ h1 {
 
 #select {
   display: block;
-  //font-size: 16px;
   font-weight: 700;
   color: #444;
   line-height: 1.3;
@@ -343,7 +339,6 @@ h1 {
   margin: 0;
   border: 1px solid #aaa;
   box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
-  //border-radius: .5em;
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
@@ -373,24 +368,38 @@ h1 {
 
 
 .donors {
- display: flex;
   align-items: center;
   padding: 5px;
   border: 1px solid grey;
   margin: 2px;
   @media(max-width: 800px){
+    width: 90%;
+    margin: 15px auto;
     display: block;
   }
 
   img {
+    display: inline-block;
     margin-right: 10px;
+    width: 95%;
   }
 
   p {
-    margin-block-start: 0;
-    margin-block-end: 0;
+    width: 100%;
+    height: max-content;
+    display: inline-block;
     font-size: 12px;
   }
+}
+
+#donors-2019 {
+  display: grid;
+  grid-template-columns: 130px 160px 60px auto;
+}
+
+#donors-2018 {
+  display: grid;
+  grid-template-columns: 60px auto;
 }
 
 
