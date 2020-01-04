@@ -204,7 +204,7 @@ svg#adm1 {
   padding: 10px 0;
   font-family: 'Montserrat', sans-serif;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   justify-content: space-around;
   border-bottom: 1px solid grey; }
   @media (max-width: 800px) {
@@ -221,12 +221,12 @@ svg#adm1 {
       #source a {
         text-align: center;
         margin-bottom: 5px; } }
-  #source a:nth-child(2) {
+  #source a:nth-child(2), #source a:nth-child(3) {
     text-align: center; }
-  #source a:nth-child(3) {
+  #source a:nth-child(4) {
     text-align: right; }
     @media (max-width: 800px) {
-      #source a:nth-child(3) {
+      #source a:nth-child(4) {
         text-align: center; } }
 
 .leaflet-popup-content-wrapper {
